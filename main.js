@@ -16,14 +16,23 @@ camera.position.z = 5;
 
 //adding a cube
 const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshStandardMaterial({ color: 0xd4cd77 });
-const cube = new THREE.Mesh(geometry, material);
+const materials = [
+    new THREE.MeshStandardMaterial({ color: 0xd4cd77 }),
+    new THREE.MeshStandardMaterial({ color: 0xd4cd77 }),
+    new THREE.MeshStandardMaterial({ color: 0xd4cd77 }),
+    new THREE.MeshStandardMaterial({ color: 0xd4cd77 }),
+    new THREE.MeshStandardMaterial({ color: 0xd4cd77 }),
+    new THREE.MeshStandardMaterial({ color: 0xd4cd77 }),
+];
+
+const cube = new THREE.Mesh(geometry, materials);
 scene.add(cube);
 
 //adding lighting
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
 scene.add(ambientLight);
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+
 scene.add(directionalLight);
 
 //controls
@@ -49,12 +58,64 @@ function animate() {
     const intersects = raycaster.intersectObjects(scene.children);
 
     if (intersects.length > 0) {
-        for (let i = 0; i < intersects.length; i++) {
-            intersects[i].object.material.color.set(0xff0000);
-            intersects[i].object.material.needsUpdate = true;
+        console.log(intersects[0].faceIndex);
+        //check face
+        switch (intersects[0].faceIndex) {
+            case 0:
+                intersects[0].object.material[0].color.set(0xff0000);
+                intersects[0].object.material[0].needsUpdate = true;
+                break;
+            case 1:
+                intersects[0].object.material[0].color.set(0xff0000);
+                intersects[0].object.material[0].needsUpdate = true;
+                break;
+            case 2:
+                intersects[0].object.material[1].color.set(0xff0000);
+                intersects[0].object.material[1].needsUpdate = true;
+                break;
+            case 3:
+                intersects[0].object.material[1].color.set(0xff0000);
+                intersects[0].object.material[1].needsUpdate = true;
+                break;
+            case 4:
+                intersects[0].object.material[2].color.set(0xff0000);
+                intersects[0].object.material[2].needsUpdate = true;
+                break;
+            case 5:
+                intersects[0].object.material[1].color.set(0xff0000);
+                intersects[0].object.material[1].needsUpdate = true;
+                break;
+            case 6:
+                intersects[0].object.material[3].color.set(0xff0000);
+                intersects[0].object.material[3].needsUpdate = true;
+                break;
+            case 7:
+                intersects[0].object.material[1].color.set(0xff0000);
+                intersects[0].object.material[1].needsUpdate = true;
+                break;
+            case 8:
+                intersects[0].object.material[4].color.set(0xff0000);
+                intersects[0].object.material[4].needsUpdate = true;
+                break;
+            case 9:
+                intersects[0].object.material[1].color.set(0xff0000);
+                intersects[0].object.material[1].needsUpdate = true;
+                break;
+            case 10:
+                intersects[0].object.material[5].color.set(0xff0000);
+                intersects[0].object.material[5].needsUpdate = true;
+                break;
+            case 11:
+                intersects[0].object.material[5].color.set(0xff0000);
+                intersects[0].object.material[5].needsUpdate = true;
         }
     } else {
-        cube.material.color.set(0xd4cd77);
+        cube.material[0].color.set(0xd4cd77);
+        cube.material[1].color.set(0xd4cd77);
+        cube.material[2].color.set(0xd4cd77);
+        cube.material[3].color.set(0xd4cd77);
+        cube.material[4].color.set(0xd4cd77);
+        cube.material[5].color.set(0xd4cd77);
     }
 
     //camera controls update
