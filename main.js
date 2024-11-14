@@ -49,6 +49,98 @@ function onPointerMove(event) {
 
 window.addEventListener("pointermove", onPointerMove);
 
+//helper function for determining cube face mouse is hovering
+//probably dont need this guy can remove it when refactoring
+let faceNormal = 0;
+let isHovered = false;
+function detectFace(intersects) {
+    let face = 0;
+    if (intersects.length > 0) {
+        isHovered = true;
+        faceNormal = intersects[0].face.normal;
+        //check face
+        switch (intersects[0].faceIndex) {
+            case 0:
+                intersects[0].object.material[0].color.set(0xff0000);
+                intersects[0].object.material[0].needsUpdate = true;
+                face = 0;
+                break;
+            case 1:
+                intersects[0].object.material[0].color.set(0xff0000);
+                intersects[0].object.material[0].needsUpdate = true;
+                face = 0;
+                break;
+            case 2:
+                intersects[0].object.material[1].color.set(0xff0000);
+                intersects[0].object.material[1].needsUpdate = true;
+                face = 1;
+                break;
+            case 3:
+                intersects[0].object.material[1].color.set(0xff0000);
+                intersects[0].object.material[1].needsUpdate = true;
+                face = 1;
+                break;
+            case 4:
+                intersects[0].object.material[2].color.set(0xff0000);
+                intersects[0].object.material[2].needsUpdate = true;
+                face = 2;
+                break;
+            case 5:
+                intersects[0].object.material[1].color.set(0xff0000);
+                intersects[0].object.material[1].needsUpdate = true;
+                face = 2;
+                break;
+            case 6:
+                intersects[0].object.material[3].color.set(0xff0000);
+                intersects[0].object.material[3].needsUpdate = true;
+                face = 3;
+                break;
+            case 7:
+                intersects[0].object.material[1].color.set(0xff0000);
+                intersects[0].object.material[1].needsUpdate = true;
+                face = 3;
+                break;
+            case 8:
+                intersects[0].object.material[4].color.set(0xff0000);
+                intersects[0].object.material[4].needsUpdate = true;
+                face = 4;
+                break;
+            case 9:
+                intersects[0].object.material[1].color.set(0xff0000);
+                intersects[0].object.material[1].needsUpdate = true;
+                face = 4;
+                break;
+            case 10:
+                intersects[0].object.material[5].color.set(0xff0000);
+                intersects[0].object.material[5].needsUpdate = true;
+                face = 5;
+                break;
+            case 11:
+                intersects[0].object.material[5].color.set(0xff0000);
+                intersects[0].object.material[5].needsUpdate = true;
+                face = 5;
+        }
+    } else {
+        isHovered = false;
+        cube.material[0].color.set(0xd4cd77);
+        cube.material[1].color.set(0xd4cd77);
+        cube.material[2].color.set(0xd4cd77);
+        cube.material[3].color.set(0xd4cd77);
+        cube.material[4].color.set(0xd4cd77);
+        cube.material[5].color.set(0xd4cd77);
+    }
+    return face;
+}
+
+//function for outputting coordinates of clicked face
+//helper var
+let activeFace = 0;
+window.addEventListener("click", () => {
+    if (isHovered) {
+        console.log(faceNormal);
+    }
+});
+
 //rendering
 function animate() {
     // update the picking ray with the camera and pointer position
@@ -57,67 +149,7 @@ function animate() {
     // calculate objects intersecting the picking ray
     const intersects = raycaster.intersectObjects(scene.children);
 
-    if (intersects.length > 0) {
-        console.log(intersects[0].faceIndex);
-        //check face
-        switch (intersects[0].faceIndex) {
-            case 0:
-                intersects[0].object.material[0].color.set(0xff0000);
-                intersects[0].object.material[0].needsUpdate = true;
-                break;
-            case 1:
-                intersects[0].object.material[0].color.set(0xff0000);
-                intersects[0].object.material[0].needsUpdate = true;
-                break;
-            case 2:
-                intersects[0].object.material[1].color.set(0xff0000);
-                intersects[0].object.material[1].needsUpdate = true;
-                break;
-            case 3:
-                intersects[0].object.material[1].color.set(0xff0000);
-                intersects[0].object.material[1].needsUpdate = true;
-                break;
-            case 4:
-                intersects[0].object.material[2].color.set(0xff0000);
-                intersects[0].object.material[2].needsUpdate = true;
-                break;
-            case 5:
-                intersects[0].object.material[1].color.set(0xff0000);
-                intersects[0].object.material[1].needsUpdate = true;
-                break;
-            case 6:
-                intersects[0].object.material[3].color.set(0xff0000);
-                intersects[0].object.material[3].needsUpdate = true;
-                break;
-            case 7:
-                intersects[0].object.material[1].color.set(0xff0000);
-                intersects[0].object.material[1].needsUpdate = true;
-                break;
-            case 8:
-                intersects[0].object.material[4].color.set(0xff0000);
-                intersects[0].object.material[4].needsUpdate = true;
-                break;
-            case 9:
-                intersects[0].object.material[1].color.set(0xff0000);
-                intersects[0].object.material[1].needsUpdate = true;
-                break;
-            case 10:
-                intersects[0].object.material[5].color.set(0xff0000);
-                intersects[0].object.material[5].needsUpdate = true;
-                break;
-            case 11:
-                intersects[0].object.material[5].color.set(0xff0000);
-                intersects[0].object.material[5].needsUpdate = true;
-        }
-    } else {
-        cube.material[0].color.set(0xd4cd77);
-        cube.material[1].color.set(0xd4cd77);
-        cube.material[2].color.set(0xd4cd77);
-        cube.material[3].color.set(0xd4cd77);
-        cube.material[4].color.set(0xd4cd77);
-        cube.material[5].color.set(0xd4cd77);
-    }
-
+    activeFace = detectFace(intersects);
     //camera controls update
     controls.update();
 
